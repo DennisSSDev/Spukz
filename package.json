@@ -10,7 +10,7 @@
     "start": "node ./build/server.js",
     "pretest": "eslint ./src/* --fix",
     "test": "echo \"Test complete\"",
-    "heroku-postbuild": "cd client && yarn && yarn run build"
+    "heroku-postbuild": "cd client && yarn && yarn run build && cd .."
   },
   "dependencies": {
     "@types/body-parser": "^1.17.1",
