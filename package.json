@@ -8,9 +8,9 @@
     "dev": "./node_modules/.bin/ts-node-dev --respawn --transpileOnly ./src/server.ts",
     "prod": "./node_modules/.bin/tsc && node ./build/server.js",
     "start": "node ./build/server.js",
-    "pretest": "eslint ./src/* --fix",
+    "pretest": "eslint ./src/* --fix && cd client && eslint --fix . --ext .tsx",
     "test": "echo \"Test complete\"",
-    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+    "heroku-postbuild": "cd client && yarn install --only=dev && yarn install && yarn run build"
   },
   "dependencies": {
     "@types/body-parser": "^1.17.1",
