@@ -9,7 +9,8 @@
     "prod": "./node_modules/.bin/tsc && node ./build/server.js",
     "start": "node ./build/server.js",
     "pretest": "eslint ./src/* --fix",
-    "test": "echo \"Test complete\""
+    "test": "echo \"Test complete\"",
+    "heroku-postbuild": "cd client && yarn && yarn run build"
   },
   "dependencies": {
     "@types/body-parser": "^1.17.1",
