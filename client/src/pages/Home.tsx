@@ -1,15 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavBar } from '../components/navbar';
+import { Title } from '../components/title';
+import { Tags } from '../components/tags';
+import { Footer } from '../components/footer';
+import { FeedEntry } from '../components/feedEntry';
 
 const Home: React.FunctionComponent = () => {
   return (
-    <div className="App">
-      <h1>Project Home</h1>
-      {/* Link to List.js */}
-      <Link to="./list">
-        <button type="button">My List</button>
-      </Link>
-    </div>
+    <React.Fragment>
+      <NavBar />
+      <Title title="Feed" />
+      <Tags />
+      <FeedEntry title="Resource" />
+      <FeedEntry />
+      <FeedEntry />
+      <Footer />
+    </React.Fragment>
   );
 };
 
