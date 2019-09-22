@@ -2,23 +2,14 @@ import React from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
 import { Typography, Box } from '@material-ui/core';
 import { WhiteText } from '../title';
+import { FormDialog, Shape } from '../dialog';
 
 const useStyles = makeStyles(() =>
   createStyles({
     grow: {
       flexGrow: 1
-    },
-    fabButton: {
-      position: 'absolute',
-      zIndex: 1,
-      top: -30,
-      left: 0,
-      right: 0,
-      margin: '0 auto'
     },
     divider: {
       marginTop: 1,
@@ -53,9 +44,7 @@ const VisualComponent: React.FunctionComponent = () => {
       </Box>
       <AppBar color="primary" position="static">
         <Toolbar>
-          <Fab color="secondary" aria-label="add" className={classes.fabButton}>
-            <AddIcon />
-          </Fab>
+          <FormDialog shape={Shape.Circle} />
           <Typography>(c) Dennis Slavinsky</Typography>
           <div className={classes.grow} />
         </Toolbar>

@@ -15,9 +15,44 @@ const useStyles = makeStyles(() =>
   })
 );
 
-const VisualComponent: React.FunctionComponent = () => {
-  // const { title } = props;
+export interface PublicProps {
+  tight?: boolean;
+  onChipSelect?: () => void;
+}
+
+export interface State {
+  chipMap: Record<string, 'default' | 'outlined' | undefined>;
+}
+
+type Props = PublicProps;
+
+const VisualComponent: React.FunctionComponent<Props> = (props: Props) => {
   const classes = useStyles();
+  const { tight, onChipSelect } = props;
+  const [values, setValues] = React.useState<State>({
+    chipMap: {
+      GitHub: 'outlined',
+      'C++': 'outlined',
+      Vault: 'outlined',
+      Unreal: 'outlined',
+      Unity: 'outlined'
+    }
+  });
+
+  const gridSpacing = tight ? 1 : 4;
+  const selectChipSetup = (val: string) => {
+    return () => {
+      const { chipMap } = values;
+      if (chipMap[val] === 'outlined') {
+        chipMap[val] = 'default';
+        setValues({ chipMap });
+      } else {
+        chipMap[val] = 'outlined';
+        setValues({ chipMap });
+      }
+      if (onChipSelect) onChipSelect();
+    };
+  };
   return (
     <Box
       marginTop={3}
@@ -28,15 +63,16 @@ const VisualComponent: React.FunctionComponent = () => {
     >
       <Grid container justify="center" alignItems="center" direction="row">
         <Grid item xs={12}>
-          <Grid container justify="center" spacing={4}>
-            {['Github', 'C++', 'Vault', 'Unreal', 'Unity'].map(value => (
+          <Grid container justify="center" spacing={gridSpacing}>
+            {['GitHub', 'C++', 'Vault', 'Unreal', 'Unity'].map(value => (
               <Grid key={value} item>
                 <Chip
-                  variant="outlined"
+                  variant={values.chipMap[value]}
                   color="secondary"
                   clickable
                   label={value}
                   className={classes.chip}
+                  onClick={selectChipSetup(value)}
                 />
               </Grid>
             ))}

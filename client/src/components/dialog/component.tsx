@@ -6,9 +6,16 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Typography, createStyles, Theme, MenuItem } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
-import { RegularButton } from '../../navbar';
+import {
+  Typography,
+  createStyles,
+  Theme,
+  MenuItem,
+  Fab
+} from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import { makeStyles, withStyles } from '@material-ui/styles';
+import { Tags } from '../tags';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,6 +42,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     submit: {
       backgroundColor: 'blue'
+    },
+    fabButton: {
+      position: 'absolute',
+      zIndex: 1,
+      top: -30,
+      left: 0,
+      right: 0,
+      margin: '0 auto'
     }
   })
 );
@@ -54,12 +69,29 @@ const resources = [
   }
 ];
 
+export enum Shape {
+  Circle = 0,
+  Square = 1
+}
+
+interface PublicProps {
+  shape: Shape;
+}
+
 interface State {
   resource: string;
   open: boolean;
 }
 
-export const FormSquareDialog = () => {
+export const RegularButton = withStyles({
+  root: {
+    textTransform: 'none'
+  }
+})(Button);
+
+type Props = PublicProps;
+
+export const FormDialog: React.FunctionComponent<Props> = (props: Props) => {
   const [values, setValues] = React.useState<State>({
     resource: 'G',
     open: false
@@ -81,8 +113,11 @@ export const FormSquareDialog = () => {
     setValues({ ...values, [name]: event.target.value });
   };
 
-  return (
-    <div>
+  const { shape } = props;
+
+  let ButtonShape = null;
+  if (shape === Shape.Square) {
+    ButtonShape = () => (
       <RegularButton
         variant="contained"
         color="secondary"
@@ -90,7 +125,22 @@ export const FormSquareDialog = () => {
       >
         <Typography variant="h6">Contribute</Typography>
       </RegularButton>
-
+    );
+  } else {
+    ButtonShape = () => (
+      <Fab
+        color="secondary"
+        aria-label="add"
+        className={classes.fabButton}
+        onClick={handleClickOpen}
+      >
+        <AddIcon />
+      </Fab>
+    );
+  }
+  return (
+    <div>
+      {ButtonShape()}
       <Dialog
         open={values.open}
         onClose={handleClose}
@@ -131,7 +181,6 @@ export const FormSquareDialog = () => {
             ))}
           </TextField>
           <br />
-          <br />
           <TextField
             required
             id="link"
@@ -142,7 +191,6 @@ export const FormSquareDialog = () => {
             fullWidth
           />
           <br />
-          <br />
           <TextField
             id="description"
             label="Description"
@@ -152,6 +200,12 @@ export const FormSquareDialog = () => {
             helperText="Useful Information"
           />
           <br />
+          <br />
+          <br />
+          <DialogContentText>
+            Select the appropriate tags by which to find your resource:
+          </DialogContentText>
+          <Tags tight />
           <br />
         </DialogContent>
         <DialogActions>

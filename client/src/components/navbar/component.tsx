@@ -1,10 +1,9 @@
 import React from 'react';
-import { createStyles, makeStyles, withStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import { FormSquareDialog } from '../dialog/square';
+import { FormDialog, Shape, RegularButton } from '../dialog';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -28,12 +27,6 @@ const useStyles = makeStyles(() =>
   })
 );
 
-export const RegularButton = withStyles({
-  root: {
-    textTransform: 'none'
-  }
-})(Button);
-
 const VisualComponent: React.FunctionComponent = () => {
   const classes = useStyles();
   return (
@@ -44,7 +37,7 @@ const VisualComponent: React.FunctionComponent = () => {
             Spukz
           </Typography>
           <div className={classes.contribute}>
-            <FormSquareDialog />
+            <FormDialog shape={Shape.Square} />
           </div>
 
           <div className={classes.tabSection}>
