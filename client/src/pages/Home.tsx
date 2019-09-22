@@ -11,7 +11,7 @@ const Home: React.FunctionComponent = () => {
       <NavBar />
       <Title title="Feed" />
       <Tags />
-      <FeedEntry title="Resource" />
+      <FeedEntry />
       <FeedEntry />
       <FeedEntry />
       <Footer />
