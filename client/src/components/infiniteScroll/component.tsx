@@ -58,7 +58,6 @@ class VisualComponent extends React.Component<{}, State> {
     data.resources.forEach((item: any) => {
       resources.push(item);
     });
-    console.log(resources);
     count++;
     this.setState({ resources, hasMore, count, start, end });
   };
