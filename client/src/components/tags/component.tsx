@@ -17,7 +17,7 @@ const useStyles = makeStyles(() =>
 
 export interface PublicProps {
   tight?: boolean;
-  onChipSelect?: () => void;
+  onChipSelect?: (resource: string, type: string) => void;
 }
 
 export interface State {
@@ -50,7 +50,7 @@ const VisualComponent: React.FunctionComponent<Props> = (props: Props) => {
         chipMap[val] = 'outlined';
         setValues({ chipMap });
       }
-      if (onChipSelect) onChipSelect();
+      if (onChipSelect) onChipSelect(val, chipMap[val] as string);
     };
   };
   return (

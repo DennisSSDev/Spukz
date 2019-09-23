@@ -3,7 +3,7 @@ import { NavBar } from '../components/navbar';
 import { Title } from '../components/title';
 import { Tags } from '../components/tags';
 import { Footer } from '../components/footer';
-import { FeedEntry } from '../components/feedEntry';
+import { InfScroll } from '../components/infiniteScroll';
 
 const Home: React.FunctionComponent = () => {
   return (
@@ -11,9 +11,7 @@ const Home: React.FunctionComponent = () => {
       <NavBar />
       <Title title="Feed" />
       <Tags />
-      <FeedEntry />
-      <FeedEntry />
-      <FeedEntry />
+      <InfScroll />
       <Footer />
     </React.Fragment>
   );

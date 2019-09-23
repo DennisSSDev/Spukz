@@ -56,16 +56,16 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const resources = [
   {
-    value: 'G',
+    value: 'GitHub',
     label: 'GitHub'
   },
   {
-    value: 'V',
+    value: 'GDCVault',
     label: 'GDC Vault'
   },
   {
-    value: 'Y',
-    label: 'Youtube'
+    value: 'YouTube',
+    label: 'YouTube'
   }
 ];
 
@@ -81,6 +81,9 @@ interface PublicProps {
 interface State {
   resource: string;
   open: boolean;
+  tags: string[];
+  link: string;
+  description: string;
 }
 
 export const RegularButton = withStyles({
@@ -93,19 +96,66 @@ type Props = PublicProps;
 
 export const FormDialog: React.FunctionComponent<Props> = (props: Props) => {
   const [values, setValues] = React.useState<State>({
-    resource: 'G',
-    open: false
+    resource: 'GitHub',
+    open: false,
+    link: '',
+    description: '',
+    tags: []
   });
 
+  const classes = useStyles();
+
   const handleClickOpen = () => {
-    setValues({ open: true, resource: values.resource });
+    setValues({ ...values, open: true });
+  };
+
+  const sendPost = async () => {
+    const data = {
+      type: values.resource,
+      link: values.link,
+      description: values.description,
+      tags: values.tags
+    };
+    const resp = await fetch('/newResource', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (resp.status === 204) {
+      console.log('Data has been updated');
+      return;
+    }
+    if (resp.status === 201) {
+      const json = await resp.json();
+      console.log(json);
+    }
+    if (resp.status >= 300) {
+      try {
+        const json = await resp.json();
+        console.log(json);
+      } catch (err) {
+        console.log(`Error Code: ${resp.status}`);
+      }
+    }
   };
 
   const handleClose = () => {
-    setValues({ open: false, resource: values.resource });
+    setValues({ ...values, open: false });
   };
 
-  const classes = useStyles();
+  const onChipSelect = (resource: string, type: string) => {
+    const { tags } = values;
+    if (type === 'outlined') {
+      const remIndex = tags.indexOf(resource);
+      if (remIndex > -1) {
+        tags.splice(remIndex, 1);
+        setValues({ ...values, tags });
+      }
+      return;
+    }
+    tags.push(resource);
+    setValues({ ...values, tags });
+  };
 
   const handleChange = (name: keyof State) => (
     event: React.ChangeEvent<HTMLInputElement>
@@ -155,8 +205,9 @@ export const FormDialog: React.FunctionComponent<Props> = (props: Props) => {
         <DialogContent>
           <DialogContentText>
             Spukz is a mass growing service that helps gameplay programming
-            students find internships in the game field. Please contribute your
-            resource to help others find their dream job!
+            students to prepare for internships in the game field. Please
+            contribute your resource to help others get ready for their dream
+            job!
           </DialogContentText>
           <TextField
             id="standard-select-currency"
@@ -188,6 +239,7 @@ export const FormDialog: React.FunctionComponent<Props> = (props: Props) => {
             placeholder="github.com/"
             helperText="Enter Resource Link"
             type="search"
+            onChange={handleChange('link')}
             fullWidth
           />
           <br />
@@ -198,6 +250,7 @@ export const FormDialog: React.FunctionComponent<Props> = (props: Props) => {
             fullWidth
             multiline
             helperText="Useful Information"
+            onChange={handleChange('description')}
           />
           <br />
           <br />
@@ -205,7 +258,7 @@ export const FormDialog: React.FunctionComponent<Props> = (props: Props) => {
           <DialogContentText>
             Select the appropriate tags by which to find your resource:
           </DialogContentText>
-          <Tags tight />
+          <Tags tight onChipSelect={onChipSelect} />
           <br />
         </DialogContent>
         <DialogActions>
@@ -216,7 +269,7 @@ export const FormDialog: React.FunctionComponent<Props> = (props: Props) => {
           >
             Cancel
           </Button>
-          <Button onClick={handleClose} variant="contained" color="secondary">
+          <Button onClick={sendPost} variant="contained" color="secondary">
             Submit
           </Button>
         </DialogActions>

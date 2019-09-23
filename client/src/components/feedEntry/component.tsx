@@ -3,8 +3,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import { Box } from '@material-ui/core';
+import { Box, Link, Container } from '@material-ui/core';
 import { WhiteText } from '../title';
 import './custom.scss';
 
@@ -17,14 +16,17 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(2),
       margin: 'auto',
       maxWidth: 500,
-      backgroundColor: '#424242'
+      backgroundColor: '#424242',
+      height: 160,
+      maxHeight: 160,
+      minHeight: 160
+    },
+    imageFrame: {
+      width: 78,
+      height: 78
     },
     image: {
-      width: 128,
-      height: 128
-    },
-    img: {
-      margin: 'auto',
+      marginTop: 28,
       display: 'block',
       maxWidth: '100%',
       maxHeight: '100%'
@@ -40,6 +42,7 @@ export interface PublicProps {
   subtitle?: string;
   text?: string;
   image?: string;
+  imageType?: string;
   link?: string;
 }
 
@@ -63,47 +66,81 @@ const Placeholder: React.FunctionComponent<{}> = () => {
   );
 };
 
+interface State {
+  shadow: number;
+}
+
 const VisualComponent: React.FunctionComponent<Props> = (props: Props) => {
-  const { title, subtitle, text, image } = props;
+  const [values, setValues] = React.useState<State>({
+    shadow: 2
+  });
+  const { title, subtitle, image, imageType, link } = props;
+  let { text } = props;
   const classes = useStyles();
 
   if (!title) {
     return <Placeholder />;
   }
+  if (text) {
+    text = text.slice(0, 120);
+    text += '...';
+  }
+
+  const onMouseEnter = () => {
+    setValues({ shadow: 20 });
+  };
+
+  const onMouseExit = () => {
+    setValues({ shadow: 2 });
+  };
+
   return (
-    <Box marginTop={10} className={classes.root}>
-      <Paper className={classes.paper}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs>
-                <WhiteText gutterBottom variant="h6">
-                  {`Added new ${title}`}
-                </WhiteText>
-                <Typography
-                  variant="body1"
-                  className={classes.subTitle}
-                  gutterBottom
-                >
-                  {`Subtitle goes here ${subtitle}`}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  className={classes.subTitle}
-                  color="textSecondary"
-                >
-                  {`main text goes here ${text}`}
-                </Typography>
+    <Box marginTop={4} alignContent="center" className={classes.root}>
+      <Container maxWidth="sm">
+        <Paper
+          className={classes.paper}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseExit}
+          elevation={values.shadow}
+        >
+          <Link href={link} target="_blank">
+            <Grid container spacing={2}>
+              <Grid item>
+                <div className={classes.imageFrame}>
+                  <img
+                    className={classes.image}
+                    alt="complex"
+                    src={`data:image/${imageType || 'png'};base64, ${image}`}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12} sm container>
+                <Grid item xs container direction="column" spacing={2}>
+                  <Grid item xs>
+                    <WhiteText gutterBottom variant="h6">
+                      {`Added new ${title}`}
+                    </WhiteText>
+                    <Typography
+                      variant="body1"
+                      className={classes.subTitle}
+                      gutterBottom
+                    >
+                      {`${subtitle}`}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      className={classes.subTitle}
+                      color="textSecondary"
+                    >
+                      {`${text}`}
+                    </Typography>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item>
-            <ButtonBase className={classes.image}>
-              <img className={classes.img} alt="complex" src={image} />
-            </ButtonBase>
-          </Grid>
-        </Grid>
-      </Paper>
+          </Link>
+        </Paper>
+      </Container>
     </Box>
   );
 };
