@@ -11,10 +11,9 @@ const GLOBAL: Global = {
 };
 
 export const GenContent = () => {
-  // todo: verify the names and extensions are correct
-  const ytIcon = fs.readFileSync(`${__dirname}/meta/ytIcon.png`);
-  const ghIcon = fs.readFileSync(`${__dirname}/meta/ghIcon.svg`);
-  const gdcVIcon = fs.readFileSync(`${__dirname}/meta/gdcVIcon.png`);
+  const ytIcon = fs.readFileSync(`${__dirname}/../meta/ytIcon.png`);
+  const ghIcon = fs.readFileSync(`${__dirname}/../meta/ghIcon.svg`);
+  const gdcVIcon = fs.readFileSync(`${__dirname}/../meta/gdcVIcon.png`);
   const yt64 = Buffer.from(ytIcon).toString('base64');
   const gh64 = Buffer.from(ghIcon).toString('base64');
   const gdcV64 = Buffer.from(gdcVIcon).toString('base64');
