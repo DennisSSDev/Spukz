@@ -16,6 +16,7 @@ const useStyles = makeStyles(() =>
 );
 
 export interface PublicProps {
+  canRequest?: boolean;
   tight?: boolean;
   onChipSelect?: (resource: string, type: string) => void;
 }

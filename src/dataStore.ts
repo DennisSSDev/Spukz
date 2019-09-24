@@ -102,28 +102,18 @@ export const AddNewResource = (res: Resource): number => {
   return status;
 };
 
-// both params inclusive
-// if the end overflows - range would go to the last element
-export const GetResources = (
+// helper function to deal with resource cut outs based on start and end
+const handleResourceSubDivision = (
+  resources: Resource[],
   start: number,
   end: number
-): { resources: Resource[]; done: boolean } => {
-  const { resources } = GLOBAL.store;
-  const { length } = resources;
+) => {
   const result: { resources: Resource[]; done: boolean } = {
     resources: [],
     done: false
   };
-  if (start > length || start < 0) {
-    throw new Error('RangeOverflow');
-  }
-  if (end < start || end < 0) {
-    throw new Error('RangeOverflow');
-  }
-  if (start === end) {
-    result.resources.push(resources[start]);
-    return result;
-  }
+  const { length } = resources;
+
   if (length - end < 0) {
     result.resources = resources.slice(0, length - start);
     result.done = true;
@@ -141,6 +131,41 @@ export const GetResources = (
   result.resources = resources.slice(length - end, length - start);
   result.resources.reverse();
   return result;
+};
+
+// both params inclusive
+// if the end overflows - range would go to the last element
+export const GetResources = (
+  start: number,
+  end: number,
+  tags: Tag[]
+): { resources: Resource[]; done: boolean } => {
+  const { resources } = GLOBAL.store;
+  const { length } = resources;
+  const result: { resources: Resource[]; done: boolean } = {
+    resources: [],
+    done: false
+  };
+  if (start > length || start < 0) {
+    throw new Error('RangeOverflow');
+  }
+  if (end < start || end < 0) {
+    throw new Error('RangeOverflow');
+  }
+  if (start === end) {
+    result.resources.push(resources[start]);
+    return result;
+  }
+  let filteredResources: Resource[] = [];
+  if (tags.length > 0) {
+    filteredResources = resources.filter(value => {
+      return value.tags.some(v => tags.includes(v));
+    });
+  }
+  if (filteredResources.length > 0) {
+    return handleResourceSubDivision(filteredResources, start, end);
+  }
+  return handleResourceSubDivision(resources, start, end);
 };
 
 export default GLOBAL;

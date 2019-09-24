@@ -1,10 +1,9 @@
 import express from 'express';
-import { Resource, Type } from './dataTypes';
+import { Resource, Type, Tag } from './dataTypes';
 import GLOBAL, { GetResources, AddNewResource, GenContent } from './dataStore';
 
 // Data by default should always be JSON. If you're still using XML /shrug
 const app = express();
-
 app.use(express.static(`${__dirname}/../client/build`));
 app.use(express.json());
 
@@ -26,9 +25,15 @@ app.get('/getFeed', (req, res) => {
   }
   const start = query.start as number;
   const end = query.end as number;
-  // todo: add tags support
+  const tagsArr: Tag[] = [];
+  // deal with tags. There is no future plan to add more tags so this is fine
+  if (query.github && query.github === 'true') tagsArr.push(Tag.GitHub);
+  if (query.cpp && query.cpp === 'true') tagsArr.push(Tag['C++']);
+  if (query.vault && query.vault === 'true') tagsArr.push(Tag.Vault);
+  if (query.unreal && query.unreal === 'true') tagsArr.push(Tag.Unreal);
+  if (query.unity && query.unity === 'true') tagsArr.push(Tag.Unity);
   try {
-    res.json(GetResources(start, end));
+    res.json(GetResources(start, end, tagsArr));
     return;
   } catch (err) {
     if (err.message === 'RangeOverflow') {
@@ -97,6 +102,7 @@ app.get('*', (req, res) => {
   res.sendFile(`${__dirname}/../client/build/index.html`);
 });
 
+// create initial data and servable icons
 GenContent();
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Listening on port ${port}`));
