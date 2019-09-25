@@ -3,6 +3,7 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom';
 import { FormDialog, Shape, RegularButton } from '../dialog';
 
 const useStyles = makeStyles(() =>
@@ -35,25 +36,33 @@ const VisualComponent: React.FunctionComponent = () => {
     <div>
       <AppBar>
         <Toolbar className={classes.toolbar}>
-          <RegularButton size="large" color="inherit" href="/">
-            <Typography className={classes.title} variant="h4">
-              Spukz
-            </Typography>
-          </RegularButton>
+          <Link to="/">
+            <RegularButton size="large" color="inherit">
+              <Typography className={classes.title} variant="h4">
+                Spukz
+              </Typography>
+            </RegularButton>
+          </Link>
           <div className={classes.contribute}>
             <FormDialog shape={Shape.Square} />
           </div>
 
           <div className={classes.tabSection}>
-            <RegularButton size="large" color="secondary" href="/resources">
-              <Typography variant="h5">Resources</Typography>
-            </RegularButton>
-            <RegularButton size="large" color="secondary" href="/code">
-              <Typography variant="h5">Code</Typography>
-            </RegularButton>
-            <RegularButton size="large" color="secondary" href="/companies">
-              <Typography variant="h5">Companies</Typography>
-            </RegularButton>
+            <Link to="./resources">
+              <RegularButton size="large" color="secondary">
+                <Typography variant="h5">Resources</Typography>
+              </RegularButton>
+            </Link>
+            <Link to="./code">
+              <RegularButton size="large" color="secondary">
+                <Typography variant="h5">Code</Typography>
+              </RegularButton>
+            </Link>
+            <Link to="./companies">
+              <RegularButton size="large" color="secondary">
+                <Typography variant="h5">Companies</Typography>
+              </RegularButton>
+            </Link>
           </div>
         </Toolbar>
       </AppBar>
