@@ -15,7 +15,7 @@ var dataTypes_1 = require("./dataTypes");
 var dataStore_1 = __importStar(require("./dataStore"));
 // Data by default should always be JSON. If you're still using XML /shrug
 var app = express_1.default();
-app.use(express_1.default.static(__dirname + "/client/build"));
+app.use(express_1.default.static(__dirname + "/../client/build"));
 app.use(express_1.default.json());
 app.get('/getFeed', function (req, res) {
     var query = req.query;
@@ -112,16 +112,7 @@ app.post('/newResource', function (req, res) {
         .json({ id: 'OK', message: 'successfully added new resource' });
 });
 app.get('*', function (req, res) {
-    res.sendFile(__dirname + "/client/build/index.html");
-});
-app.get('/companies', function (req, res) {
-    res.sendFile(__dirname + "/client/build/index.html");
-});
-app.get('/resources', function (req, res) {
-    res.sendFile(__dirname + "/client/build/index.html");
-});
-app.get('/code', function (req, res) {
-    res.sendFile(__dirname + "/client/build/index.html");
+    res.sendFile(__dirname + "/../client/build/index.html");
 });
 // create initial data and servable icons
 dataStore_1.GenContent();
