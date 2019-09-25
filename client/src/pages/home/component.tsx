@@ -1,11 +1,12 @@
 import React from 'react';
 import { Box } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/styles';
-import { NavBar } from '../components/navbar';
-import { Title, WhiteText } from '../components/title';
-import { Tags } from '../components/tags';
-import { Footer } from '../components/footer';
-import { InfScroll } from '../components/infiniteScroll';
+import { NavBar } from '../../components/navbar';
+import { Title, WhiteText } from '../../components/title';
+import { Tags } from '../../components/tags';
+import { Footer } from '../../components/footer';
+import { InfScroll } from '../../components/infiniteScroll';
+import { ScrollTop } from '../../components/scrollTop';
 
 export interface State {
   tags: Record<string, boolean>;
@@ -27,7 +28,7 @@ const useStyles = makeStyles(() =>
   })
 );
 
-const Home: React.FunctionComponent = () => {
+const VisualComponent: React.FunctionComponent = () => {
   const [values, setValues] = React.useState<State>({
     tags: {
       GitHub: false,
@@ -55,8 +56,11 @@ const Home: React.FunctionComponent = () => {
   return (
     <React.Fragment>
       <NavBar />
+      <ScrollTop />
       <div className="content">
-        <Title title="Feed" />
+        <div id="top-anchor">
+          <Title title="Feed" />
+        </div>
         <Tags onChipSelect={storeChip} />
         <InfScroll tags={values.tags} />
       </div>
@@ -77,4 +81,4 @@ const Home: React.FunctionComponent = () => {
   );
 };
 
-export default Home;
+export const Home = VisualComponent;

@@ -18,11 +18,13 @@ const useStyles = makeStyles(() =>
     title: {
       flexGrow: 0.2,
       flexDirection: 'row',
-      flexWrap: 'nowrap',
-      marginLeft: 15
+      flexWrap: 'nowrap'
     },
     contribute: {
       flexGrow: 1
+    },
+    link: {
+      textDecoration: 'none'
     }
   })
 );
@@ -33,21 +35,23 @@ const VisualComponent: React.FunctionComponent = () => {
     <div>
       <AppBar>
         <Toolbar className={classes.toolbar}>
-          <Typography className={classes.title} variant="h4">
-            Spukz
-          </Typography>
+          <RegularButton size="large" color="inherit" href="/">
+            <Typography className={classes.title} variant="h4">
+              Spukz
+            </Typography>
+          </RegularButton>
           <div className={classes.contribute}>
             <FormDialog shape={Shape.Square} />
           </div>
 
           <div className={classes.tabSection}>
-            <RegularButton size="large" color="secondary">
+            <RegularButton size="large" color="secondary" href="/resources">
               <Typography variant="h5">Resources</Typography>
             </RegularButton>
-            <RegularButton size="large" color="secondary">
+            <RegularButton size="large" color="secondary" href="/code">
               <Typography variant="h5">Code</Typography>
             </RegularButton>
-            <RegularButton size="large" color="secondary">
+            <RegularButton size="large" color="secondary" href="/companies">
               <Typography variant="h5">Companies</Typography>
             </RegularButton>
           </div>

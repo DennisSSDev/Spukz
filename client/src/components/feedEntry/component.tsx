@@ -111,7 +111,7 @@ const VisualComponent: React.FunctionComponent<Props> = (props: Props) => {
           onMouseLeave={onMouseExit}
           elevation={values.shadow}
         >
-          <Link href={link} target="_blank">
+          <Link href={link} target="_blank" rel="noopener">
             <Grid container spacing={2}>
               <Grid item>
                 <div className={classes.imageFrame}>

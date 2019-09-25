@@ -99,6 +99,7 @@ interface State {
   open: boolean;
   tags: string[];
   link: string;
+  title: string;
   description: string;
   loading: boolean;
   success: boolean;
@@ -119,6 +120,7 @@ export const FormDialog: React.FunctionComponent<Props> = (props: Props) => {
     resource: 'GitHub',
     open: false,
     link: '',
+    title: '',
     description: '',
     tags: [],
     loading: false,
@@ -142,6 +144,7 @@ export const FormDialog: React.FunctionComponent<Props> = (props: Props) => {
     const data = {
       type: values.resource,
       link: values.link,
+      title: values.title,
       description: values.description,
       tags: values.tags
     };
@@ -283,6 +286,16 @@ export const FormDialog: React.FunctionComponent<Props> = (props: Props) => {
             fullWidth
           />
           <br />
+          <TextField
+            required
+            id="title"
+            label="Title"
+            placeholder="Title"
+            helperText="Enter the Title of the Resource"
+            type="search"
+            onChange={handleChange('title')}
+            fullWidth
+          />
           <TextField
             id="description"
             label="Description"

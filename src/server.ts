@@ -65,7 +65,6 @@ app.post('/newResource', (req, res) => {
     tags,
     icon: GLOBAL.iconMap[type as Type]
   };
-  console.log(tags);
   if (!type || !link) {
     res.status(400).json({
       id: 'InvalidParams',
