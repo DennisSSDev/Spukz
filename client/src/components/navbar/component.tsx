@@ -36,29 +36,29 @@ const VisualComponent: React.FunctionComponent = () => {
     <div>
       <AppBar>
         <Toolbar className={classes.toolbar}>
-          <Link to="/">
-            <RegularButton size="large" color="inherit">
+          <RegularButton size="large" color="inherit">
+            <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
               <Typography className={classes.title} variant="h4">
                 Spukz
               </Typography>
-            </RegularButton>
-          </Link>
+            </Link>
+          </RegularButton>
           <div className={classes.contribute}>
             <FormDialog shape={Shape.Square} />
           </div>
 
           <div className={classes.tabSection}>
-            <Link to="./resources">
+            <Link to="./resources" style={{ textDecoration: 'none' }}>
               <RegularButton size="large" color="secondary">
                 <Typography variant="h5">Resources</Typography>
               </RegularButton>
             </Link>
-            <Link to="./code">
+            <Link to="./code" style={{ textDecoration: 'none' }}>
               <RegularButton size="large" color="secondary">
                 <Typography variant="h5">Code</Typography>
               </RegularButton>
             </Link>
-            <Link to="./companies">
+            <Link to="./companies" style={{ textDecoration: 'none' }}>
               <RegularButton size="large" color="secondary">
                 <Typography variant="h5">Companies</Typography>
               </RegularButton>
