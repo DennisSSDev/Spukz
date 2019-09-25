@@ -114,6 +114,15 @@ app.post('/newResource', function (req, res) {
 app.get('*', function (req, res) {
     res.sendFile(__dirname + "/../client/build/index.html");
 });
+app.get('/companies', function (req, res) {
+    res.sendFile(__dirname + "/../client/build/index.html");
+});
+app.get('/resources', function (req, res) {
+    res.sendFile(__dirname + "/../client/build/index.html");
+});
+app.get('/code', function (req, res) {
+    res.sendFile(__dirname + "/../client/build/index.html");
+});
 // create initial data and servable icons
 dataStore_1.GenContent();
 var port = process.env.PORT || 5000;
