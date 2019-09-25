@@ -34,7 +34,7 @@ const VisualComponent: React.FunctionComponent<Props> = (props: Props) => {
     chipMap: {
       GitHub: 'outlined',
       'C++': 'outlined',
-      Vault: 'outlined',
+      GDCVault: 'outlined',
       Unreal: 'outlined',
       Unity: 'outlined'
     }
@@ -65,7 +65,7 @@ const VisualComponent: React.FunctionComponent<Props> = (props: Props) => {
       <Grid container justify="center" alignItems="center" direction="row">
         <Grid item xs={12}>
           <Grid container justify="center" spacing={gridSpacing}>
-            {['GitHub', 'C++', 'Vault', 'Unreal', 'Unity'].map(value => (
+            {['GitHub', 'C++', 'GDCVault', 'Unreal', 'Unity'].map(value => (
               <Grid key={value} item>
                 <Chip
                   variant={values.chipMap[value]}

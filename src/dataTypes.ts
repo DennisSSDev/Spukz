@@ -17,6 +17,7 @@ export enum Tag {
 // Every stored and requested item is considered a resource (besides companies)
 export interface Resource {
   type: Type;
+  title: string;
   link: string;
   icon?: string;
   description: string;

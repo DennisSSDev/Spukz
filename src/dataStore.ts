@@ -21,6 +21,7 @@ export const GenContent = () => {
     {
       type: Type.YouTube,
       link: 'https://youtu.be/sMkMr2455mk',
+      title: 'Succeed in Any Programming Interview 2019',
       icon: yt64,
       description:
         "I've created a study plan to help anyone succeed in a programming interview! I've compiled it using my own interviewing experiences at tech companies in Silicon Valley, the experiences of my friends who currently work at Big N tech companies",
@@ -29,6 +30,8 @@ export const GenContent = () => {
     {
       type: Type.YouTube,
       link: 'https://youtu.be/tBO-RvTPETU',
+      title:
+        'How to Get a Game Development Job - My Best Tips For Beginners & Experts',
       icon: yt64,
       description:
         "Want to get a job as a game developer?  I'll tell you everything I know about getting hired for your first position, how to get through the application and interview process, and what to do once you're there.",
@@ -37,6 +40,8 @@ export const GenContent = () => {
     {
       type: Type.YouTube,
       link: 'https://youtu.be/cV5HArLYajE',
+      title:
+        'Everyone Watching This Is Fired: Tips for Game Industry Programmers',
       icon: yt64,
       description:
         "Unity's Mike Acton presents some broad, sweeping, and perhaps unfair generalizations about programmers in the video industry, and discusses what it would mean to be among the very best programmers in the field.",
@@ -48,6 +53,7 @@ export const GenContent = () => {
     {
       type: Type.GitHub,
       link: 'https://github.com/nujas/TheJanusFramework',
+      title: 'Janus Framework',
       icon: gh64,
       description:
         'An Unreal Engine powered framework designed to bootstrap ARPG games with a mid-large open world setting. Creators of this FW have gone to intern at WB Games and Twitch',
@@ -56,6 +62,7 @@ export const GenContent = () => {
     {
       type: Type.GitHub,
       link: 'https://github.com/EthanNichols/DXCentsEngine',
+      title: 'Cents Engine',
       icon: gh64,
       description:
         'A "student made" game engine in DX11 with C++ that has landed the student an internship opportunity at Activision',
@@ -66,6 +73,7 @@ export const GenContent = () => {
     {
       type: Type.GDCVault,
       link: 'https://www.gdcvault.com/play/1015086',
+      title: 'How NOT to Get a Job in the Game Industry',
       icon: gdcV64,
       description:
         'Want to learn how to make every mistake in the book when applying for a job? Interested in understanding what it takes to make a poor or unmemorable first impression? Join industry Hiring Managers Lindsey McQueeney and Dino McGraw as they offer advice to, real-world examples of the common pitfalls and mistakes candidates make when applying for a game development position.',
@@ -86,13 +94,12 @@ export const AddNewResource = (res: Resource): number => {
   let status = 201;
   let update = false;
   let i = -1;
-  GLOBAL.store.resources.map((value, index) => {
+  GLOBAL.store.resources.forEach((value, index) => {
     if (value.link === res.link) {
       status = 204;
       update = true;
       i = index;
     }
-    return value;
   });
   if (!update) {
     GLOBAL.store.resources.push(res);
@@ -120,7 +127,7 @@ const handleResourceSubDivision = (
     result.resources.reverse();
     return result;
   }
-  if (end >= length) {
+  if (end > length) {
     result.resources = resources.slice(0, start);
     result.done = true;
     result.resources.reverse();
@@ -157,12 +164,21 @@ export const GetResources = (
     return result;
   }
   let filteredResources: Resource[] = [];
+  let hasFiltered = false;
   if (tags.length > 0) {
-    filteredResources = resources.filter(value => {
-      return value.tags.some(v => tags.includes(v));
+    hasFiltered = true;
+    filteredResources = resources.filter(res => {
+      let count = 0;
+      const min = tags.length;
+      tags.forEach(tag => {
+        if (res.tags.includes(tag)) {
+          ++count;
+        }
+      });
+      return count === min;
     });
   }
-  if (filteredResources.length > 0) {
+  if (hasFiltered) {
     return handleResourceSubDivision(filteredResources, start, end);
   }
   return handleResourceSubDivision(resources, start, end);

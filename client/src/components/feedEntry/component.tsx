@@ -14,12 +14,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     paper: {
       padding: theme.spacing(2),
-      margin: 'auto',
+      margin: '0 auto',
       maxWidth: 500,
       backgroundColor: '#424242',
-      height: 160,
-      maxHeight: 160,
-      minHeight: 160
+      height: 180,
+      maxHeight: 180
     },
     imageFrame: {
       width: 78,
@@ -74,8 +73,8 @@ const VisualComponent: React.FunctionComponent<Props> = (props: Props) => {
   const [values, setValues] = React.useState<State>({
     shadow: 2
   });
-  const { title, subtitle, image, imageType, link } = props;
-  let { text } = props;
+  const { title, image, imageType, link } = props;
+  let { text, subtitle } = props;
   const classes = useStyles();
 
   if (!title) {
@@ -84,6 +83,10 @@ const VisualComponent: React.FunctionComponent<Props> = (props: Props) => {
   if (text) {
     text = text.slice(0, 120);
     text += '...';
+  }
+
+  if (subtitle) {
+    subtitle = subtitle.slice(0, 75);
   }
 
   const onMouseEnter = () => {
@@ -95,7 +98,12 @@ const VisualComponent: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   return (
-    <Box marginTop={4} alignContent="center" className={classes.root}>
+    <Box
+      marginTop={4}
+      alignContent="center"
+      justifyItems="center"
+      className={classes.root}
+    >
       <Container maxWidth="sm">
         <Paper
           className={classes.paper}
@@ -116,7 +124,7 @@ const VisualComponent: React.FunctionComponent<Props> = (props: Props) => {
               </Grid>
               <Grid item xs={12} sm container>
                 <Grid item xs container direction="column" spacing={2}>
-                  <Grid item xs>
+                  <Grid item xs zeroMinWidth>
                     <WhiteText gutterBottom variant="h6">
                       {`Added new ${title}`}
                     </WhiteText>

@@ -56,15 +56,16 @@ app.head('/getFeed', (req, res) => {
 
 app.post('/newResource', (req, res) => {
   const { body } = req;
-  const { type, link, description, tags } = body;
-
+  const { type, link, title, description, tags } = body;
   const newResource: Resource = {
     type,
     link,
+    title,
     description,
     tags,
     icon: GLOBAL.iconMap[type as Type]
   };
+  console.log(tags);
   if (!type || !link) {
     res.status(400).json({
       id: 'InvalidParams',

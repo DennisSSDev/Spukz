@@ -5,6 +5,7 @@ import { FeedEntry } from '../feedEntry';
 interface Resource {
   type: string;
   link: string;
+  title: string;
   icon?: string;
   description: string;
 }
@@ -54,7 +55,6 @@ class VisualComponent extends React.Component<Props, State> {
     // const arr = Object.values(props.tags);
     // const tags = Object.values(newState.tags);
     if (props.tags.Changed === true) {
-      console.log('info');
       newState.resources = [];
       newState.start = 0;
       newState.end = 0;
@@ -76,12 +76,10 @@ class VisualComponent extends React.Component<Props, State> {
   };
 
   loadMore = async () => {
-    console.log('load more');
     let { start, end, hasMore, count } = this.state;
     const { tags } = this.props;
     start = end;
     end += 3;
-    console.log(tags);
     const result = await fetch(
       `/getFeed?start=${start}&end=${end}&vault=${tags.Vault}&github=${tags.GitHub}&cpp=${tags['C++']}&unity=${tags.Unity}&unreal=${tags.Unreal}`,
       {
@@ -111,7 +109,7 @@ class VisualComponent extends React.Component<Props, State> {
           <React.Fragment key={value.link}>
             <FeedEntry
               title={typeMap[value.type]}
-              subtitle="THE ACTUAL TITLE"
+              subtitle={value.title}
               text={value.description}
               image={value.icon || ''}
               link={value.link}
