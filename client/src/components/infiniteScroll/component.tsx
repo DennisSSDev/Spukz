@@ -43,7 +43,7 @@ class VisualComponent extends React.Component<Props, State> {
       tags: {
         GitHub: false,
         'C++': false,
-        Vault: false,
+        GDCVault: false,
         Unreal: false,
         Unity: false
       }
@@ -81,7 +81,7 @@ class VisualComponent extends React.Component<Props, State> {
     start = end;
     end += 3;
     const result = await fetch(
-      `/getFeed?start=${start}&end=${end}&vault=${tags.Vault}&github=${tags.GitHub}&cpp=${tags['C++']}&unity=${tags.Unity}&unreal=${tags.Unreal}`,
+      `/getFeed?start=${start}&end=${end}&vault=${tags.GDCVault}&github=${tags.GitHub}&cpp=${tags['C++']}&unity=${tags.Unity}&unreal=${tags.Unreal}`,
       {
         method: 'GET',
         headers: {

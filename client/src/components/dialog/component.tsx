@@ -171,7 +171,14 @@ export const FormDialog: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   const handleClose = () => {
-    setValues({ ...values, open: false });
+    setValues({
+      ...values,
+      open: false,
+      success: false,
+      fail: false,
+      message: '',
+      loading: false
+    });
   };
 
   const onChipSelect = (resource: string, type: string) => {

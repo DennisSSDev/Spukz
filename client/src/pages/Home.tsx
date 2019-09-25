@@ -32,7 +32,7 @@ const Home: React.FunctionComponent = () => {
     tags: {
       GitHub: false,
       'C++': false,
-      Vault: false,
+      GDCVault: false,
       Unreal: false,
       Unity: false,
       Changed: true
