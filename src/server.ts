@@ -99,19 +99,19 @@ app.post('/newResource', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(`${__dirname}/client/build/index.html`);
+  res.sendFile(`${__dirname}/../client/build/index.html`);
 });
 
 app.get('/companies', (req, res) => {
-  res.sendFile(`${__dirname}/client/build/index.html`);
+  res.sendFile(`${__dirname}/../client/build/index.html`);
 });
 
 app.get('/resources', (req, res) => {
-  res.sendFile(`${__dirname}/client/build/index.html`);
+  res.sendFile(`${__dirname}/../client/build/index.html`);
 });
 
 app.get('/code', (req, res) => {
-  res.sendFile(`${__dirname}/client/build/index.html`);
+  res.sendFile(`${__dirname}/../client/build/index.html`);
 });
 
 // create initial data and servable icons
