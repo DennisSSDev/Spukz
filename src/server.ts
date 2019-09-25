@@ -4,7 +4,7 @@ import GLOBAL, { GetResources, AddNewResource, GenContent } from './dataStore';
 
 // Data by default should always be JSON. If you're still using XML /shrug
 const app = express();
-app.use(express.static(`${__dirname}/../client/build`));
+app.use(express.static(`${__dirname}/client/build`));
 app.use(express.json());
 
 app.get('/getFeed', (req, res) => {
@@ -99,7 +99,7 @@ app.post('/newResource', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(`${__dirname}/../client/build/index.html`);
+  res.sendFile(`${__dirname}/client/build/index.html`);
 });
 
 // create initial data and servable icons
