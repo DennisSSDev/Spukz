@@ -78,7 +78,6 @@ app.post('/newResource', function (req, res) {
         tags: tags,
         icon: dataStore_1.default.iconMap[type]
     };
-    console.log(tags);
     if (!type || !link) {
         res.status(400).json({
             id: 'InvalidParams',
