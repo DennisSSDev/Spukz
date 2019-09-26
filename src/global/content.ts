@@ -1,19 +1,15 @@
 import fs from 'fs';
-import { Global, Resource, Type, Tag } from './dataTypes';
+import GLOBAL from './dataStore';
+import { Resource, Type, Tag } from './dataTypes';
 
-const GLOBAL: Global = {
-  store: { resources: [] },
-  iconMap: {
-    GitHub: '',
-    YouTube: '',
-    GDCVault: ''
-  }
-};
-
-export const GenContent = () => {
-  const ytIcon = fs.readFileSync(`${__dirname}/../meta/ytIcon.png`);
-  const ghIcon = fs.readFileSync(`${__dirname}/../meta/ghIcon.svg`);
-  const gdcVIcon = fs.readFileSync(`${__dirname}/../meta/gdcVIcon.png`);
+/**
+ * function that pre allocates content that exists on the server.
+ * It includes curated data and hashtable look up info like icons
+ */
+const GenContent = () => {
+  const ytIcon = fs.readFileSync(`${__dirname}/../../meta/ytIcon.png`);
+  const ghIcon = fs.readFileSync(`${__dirname}/../../meta/ghIcon.svg`);
+  const gdcVIcon = fs.readFileSync(`${__dirname}/../../meta/gdcVIcon.png`);
   const yt64 = Buffer.from(ytIcon).toString('base64');
   const gh64 = Buffer.from(ghIcon).toString('base64');
   const gdcV64 = Buffer.from(gdcVIcon).toString('base64');
@@ -90,98 +86,4 @@ export const GenContent = () => {
   GLOBAL.iconMap.YouTube = yt64;
 };
 
-export const AddNewResource = (res: Resource): number => {
-  let status = 201;
-  let update = false;
-  let i = -1;
-  GLOBAL.store.resources.forEach((value, index) => {
-    if (value.link === res.link) {
-      status = 204;
-      update = true;
-      i = index;
-    }
-  });
-  if (!update) {
-    GLOBAL.store.resources.push(res);
-  } else {
-    GLOBAL.store.resources[i] = res;
-  }
-  return status;
-};
-
-// helper function to deal with resource cut outs based on start and end
-const handleResourceSubDivision = (
-  resources: Resource[],
-  start: number,
-  end: number
-) => {
-  const result: { resources: Resource[]; done: boolean } = {
-    resources: [],
-    done: false
-  };
-  const { length } = resources;
-
-  if (length - end < 0) {
-    result.resources = resources.slice(0, length - start);
-    result.done = true;
-    result.resources.reverse();
-    return result;
-  }
-  if (end > length) {
-    result.resources = resources.slice(0, start);
-    result.done = true;
-    result.resources.reverse();
-    return result;
-  }
-
-  // we want to get latest items first
-  result.resources = resources.slice(length - end, length - start);
-  result.resources.reverse();
-  return result;
-};
-
-// both params inclusive
-// if the end overflows - range would go to the last element
-export const GetResources = (
-  start: number,
-  end: number,
-  tags: Tag[]
-): { resources: Resource[]; done: boolean } => {
-  const { resources } = GLOBAL.store;
-  const { length } = resources;
-  const result: { resources: Resource[]; done: boolean } = {
-    resources: [],
-    done: false
-  };
-  if (start > length || start < 0) {
-    throw new Error('RangeOverflow');
-  }
-  if (end < start || end < 0) {
-    throw new Error('RangeOverflow');
-  }
-  if (start === end) {
-    result.resources.push(resources[start]);
-    return result;
-  }
-  let filteredResources: Resource[] = [];
-  let hasFiltered = false;
-  if (tags.length > 0) {
-    hasFiltered = true;
-    filteredResources = resources.filter(res => {
-      let count = 0;
-      const min = tags.length;
-      tags.forEach(tag => {
-        if (res.tags.includes(tag)) {
-          ++count;
-        }
-      });
-      return count === min;
-    });
-  }
-  if (hasFiltered) {
-    return handleResourceSubDivision(filteredResources, start, end);
-  }
-  return handleResourceSubDivision(resources, start, end);
-};
-
-export default GLOBAL;
+export default GenContent;
