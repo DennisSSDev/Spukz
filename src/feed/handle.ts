@@ -1,9 +1,8 @@
-import { Dictionary, Request } from 'express-serve-static-core';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { GetResources } from '../global/dataStore';
 import { Tag } from '../global/dataTypes';
 
-const GetFeed = (req: Request<Dictionary<string>>, res: Response) => {
+const GetFeed = (req: Request, res: Response) => {
   const { query } = req;
 
   const { accept } = req.headers;

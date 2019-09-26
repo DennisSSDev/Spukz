@@ -1,9 +1,8 @@
-import { Dictionary, Request } from 'express-serve-static-core';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { Resource, Type } from '../global/dataTypes';
 import GLOBAL, { AddNewResource } from '../global/dataStore';
 
-const PostResource = (req: Request<Dictionary<string>>, res: Response) => {
+const PostResource = (req: Request, res: Response) => {
   const { body } = req;
   const { type, link, title, description, tags } = body;
   const newResource: Resource = {
