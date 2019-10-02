@@ -1,5 +1,10 @@
 import { Response } from 'express';
 
+/**
+ * Helper func for finding out if the accepts are valid
+ * true means that an issue was found
+ * false means that everything is ok
+ */
 const handleAccept = (accept: string | undefined, res: Response) => {
   if (!accept) {
     res.status(400).json({

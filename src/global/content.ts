@@ -1,18 +1,26 @@
 import fs from 'fs';
 import GLOBAL from './dataStore';
-import { Resource, Type, Tag } from './dataTypes';
+import { Resource, Type, Tag, Company, CompanyRatio } from './dataTypes';
 
+const gen64Asset = (filename: string) => {
+  const binary = fs.readFileSync(`${__dirname}/../../meta/${filename}`);
+  return Buffer.from(binary).toString('base64');
+};
 /**
  * function that pre allocates content that exists on the server.
  * It includes curated data and hashtable look up info like icons
  */
 const GenContent = () => {
-  const ytIcon = fs.readFileSync(`${__dirname}/../../meta/ytIcon.png`);
-  const ghIcon = fs.readFileSync(`${__dirname}/../../meta/ghIcon.svg`);
-  const gdcVIcon = fs.readFileSync(`${__dirname}/../../meta/gdcVIcon.png`);
-  const yt64 = Buffer.from(ytIcon).toString('base64');
-  const gh64 = Buffer.from(ghIcon).toString('base64');
-  const gdcV64 = Buffer.from(gdcVIcon).toString('base64');
+  const yt64 = gen64Asset('ytIcon.png');
+  const gh64 = gen64Asset('ghIcon.svg');
+  const gdcV64 = gen64Asset('gdcVIcon.png');
+
+  const epic64 = gen64Asset('epic.png');
+  const play64 = gen64Asset('playstation.png');
+  const riot64 = gen64Asset('riot.png');
+  const unity64 = gen64Asset('unity.png');
+  const wbg64 = gen64Asset('wbgames.png');
+
   const curatedYouTubeContent: Resource[] = [
     {
       type: Type.YouTube,
@@ -65,6 +73,7 @@ const GenContent = () => {
       tags: [Tag.GitHub, Tag['C++']]
     }
   ];
+
   const curatedGDCVaultContent: Resource[] = [
     {
       type: Type.GDCVault,
@@ -76,6 +85,51 @@ const GenContent = () => {
       tags: [Tag.Vault]
     }
   ];
+
+  const curatedCompanies: Company[] = [
+    {
+      name: 'Epic Games',
+      icon: epic64,
+      link: 'https://www.epicgames.com/site/en-US/careers',
+      meta: {
+        ratio: { like: 9, dislike: 2 } // based on known info
+      }
+    },
+    {
+      name: 'Unity Technologies',
+      icon: unity64,
+      link: 'https://careers.unity.com/',
+      meta: {
+        ratio: { like: 17, dislike: 3 } // based on known info
+      }
+    },
+    {
+      name: 'Riot Games',
+      icon: riot64,
+      link: 'https://www.riotgames.com/en/work-with-us/jobs',
+      meta: {
+        ratio: { like: 4, dislike: 0 } // based on known info
+      }
+    },
+    {
+      name: 'WB Games',
+      icon: wbg64,
+      link: 'https://careers.wbgames.com/',
+      meta: {
+        ratio: { like: 21, dislike: 5 } // based on known info
+      }
+    },
+    {
+      name: 'PlayStation',
+      icon: play64,
+      link: 'https://www.playstation.com/en-us/corporate/about/careers/',
+      meta: {
+        ratio: { like: 13, dislike: 1 } // based on known info
+      }
+    }
+  ];
+
+  GLOBAL.store.companies = curatedCompanies;
   GLOBAL.store.resources = GLOBAL.store.resources.concat(
     curatedGDCVaultContent,
     curatedGithubContent,

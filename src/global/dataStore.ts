@@ -1,4 +1,4 @@
-import { Global, Resource, Tag } from './dataTypes';
+import { Global, Resource, Tag, Company } from './dataTypes';
 
 /**
  * Global Accessor to server inner data.
@@ -140,12 +140,32 @@ export const QueryResources = (
 };
 
 /**
- *
+ * helper func to get company data from the global object
  * @param page section of the list represented in the form of pages
+ * @returns a section of the list of companies
  */
-export const QueryCompanies = (page: number) => {
+export const QueryCompanies = (page: number): { companies: Company[] } => {
   // handle company request
-  console.log(page);
+  // always get in sizes of 10 or the end of list
+  let start = page * 10 + 10;
+  let end = start - 10;
+
+  const { companies } = GLOBAL.store;
+  const { length } = companies;
+
+  if (start > length) {
+    return { companies: [] };
+  }
+
+  if (start < 0) {
+    start = 0;
+  }
+
+  if (end > length) {
+    end = length;
+  }
+
+  return { companies: companies.slice(start, end) };
 };
 
 export default GLOBAL;
