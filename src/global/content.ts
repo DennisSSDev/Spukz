@@ -1,6 +1,6 @@
 import fs from 'fs';
 import GLOBAL from './dataStore';
-import { Resource, Type, Tag, Company, CompanyRatio } from './dataTypes';
+import { Resource, Type, Tag, Company } from './dataTypes';
 
 const gen64Asset = (filename: string) => {
   const binary = fs.readFileSync(`${__dirname}/../../meta/${filename}`);
