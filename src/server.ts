@@ -1,13 +1,33 @@
 import express from 'express';
+import session from 'express-session';
+import uuid from 'uuid/v4';
 import GenContent from './global/content';
 import GetFeed from './feed/handle';
 import PostResource from './form/handle';
+import { AddNewUser } from './global/dataStore';
+import GetCompanies, { PostCompanyRating } from './company/handle';
 
 const app = express();
 
 // Data by default should always be JSON. If you're still using XML /shrug
 app.use(express.static(`${__dirname}/../client/build`));
 app.use(express.json());
+
+app.use(
+  session({
+    genid: req => {
+      if (!req.sessionID) {
+        const id = uuid();
+        AddNewUser(id);
+        return id;
+      }
+      return req.sessionID;
+    },
+    secret: 'devops_1n_D3_Hauz',
+    resave: false,
+    saveUninitialized: true
+  })
+);
 
 app.get('/getFeed', (req, res) => {
   GetFeed(req, res);
@@ -19,6 +39,18 @@ app.head('/getFeed', (req, res) => {
 
 app.post('/newResource', (req, res) => {
   PostResource(req, res);
+});
+
+app.get('/getCompanies', (req, res) => {
+  GetCompanies(req, res);
+});
+
+app.head('/getCompanies', (req, res) => {
+  res.writeHead(200, undefined, { 'Content-Type': 'application/json' }).send();
+});
+
+app.post('/postRating', (req, res) => {
+  PostCompanyRating(req, res);
 });
 
 // any ask should serve React, unless specified

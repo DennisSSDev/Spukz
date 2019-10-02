@@ -7,12 +7,13 @@ import { Global, Resource, Tag } from './dataTypes';
  * Use helper methods instead.
  */
 const GLOBAL: Global = {
-  store: { resources: [] },
+  store: { resources: [], companies: [] },
   iconMap: {
     GitHub: '',
     YouTube: '',
     GDCVault: ''
-  }
+  },
+  userDB: {}
 };
 
 /**
@@ -79,8 +80,17 @@ const handleResourceSubDivision = (
   return result;
 };
 
+/**
+ * a simple way to add users to a global db.
+ * Currently only based on session ids
+ * @param id uuid of the user
+ */
+export const AddNewUser = (id: string) => {
+  GLOBAL.userDB[id] = { votes: {} };
+};
+
 // both params inclusive
-export const GetResources = (
+export const QueryResources = (
   start: number,
   end: number,
   tags: Tag[]
@@ -127,6 +137,15 @@ export const GetResources = (
     return handleResourceSubDivision(filteredResources, start, end);
   }
   return handleResourceSubDivision(resources, start, end);
+};
+
+/**
+ *
+ * @param page section of the list represented in the form of pages
+ */
+export const QueryCompanies = (page: number) => {
+  // handle company request
+  console.log(page);
 };
 
 export default GLOBAL;
