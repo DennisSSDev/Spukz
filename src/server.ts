@@ -15,13 +15,11 @@ app.use(express.json());
 
 app.use(
   session({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     genid: req => {
-      if (!req.sessionID) {
-        const id = uuid();
-        AddNewUser(id);
-        return id;
-      }
-      return req.sessionID;
+      const id = uuid();
+      AddNewUser(id);
+      return id;
     },
     secret: 'devops_1n_D3_Hauz',
     resave: false,

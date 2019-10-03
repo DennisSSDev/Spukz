@@ -147,8 +147,8 @@ export const QueryResources = (
 export const QueryCompanies = (page: number): { companies: Company[] } => {
   // handle company request
   // always get in sizes of 10 or the end of list
-  let start = page * 10 + 10;
-  let end = start - 10;
+  let end = page * 10 + 10;
+  let start = end - 10;
 
   const { companies } = GLOBAL.store;
   const { length } = companies;
@@ -161,10 +161,13 @@ export const QueryCompanies = (page: number): { companies: Company[] } => {
     start = 0;
   }
 
+  if (end <= 0) {
+    return { companies: [] };
+  }
+
   if (end > length) {
     end = length;
   }
-
   return { companies: companies.slice(start, end) };
 };
 
