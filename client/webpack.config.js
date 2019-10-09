@@ -9,10 +9,11 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js']
     },
+    publicPath: '/',
+    historyApiFallback: true,
     output: {
         path: path.resolve(__dirname, "build"),
         filename: "build.js",
-        publicPath: "/"
     },
     module: {
         rules: [
