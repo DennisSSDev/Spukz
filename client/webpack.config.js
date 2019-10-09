@@ -1,13 +1,11 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 module.exports = {
-    devServer: {
-        historyApiFallback: true
-    },
     mode: "production",
     context: __dirname,
     entry: "./src/index.tsx",
-    devtool: "source-map",
+    devtool: false,
     resolve: {
         extensions: ['.ts', '.tsx', '.js']
     },
@@ -38,21 +36,21 @@ module.exports = {
             {
                 test: /\.html$/,
                 use: [
-                        {
-                            loader: "html-loader"
-                        }
-                    ]
+                    {
+                        loader: "html-loader"
+                    }
+                ]
             }
         ]
-    },
-    externals: {
-        "react": "React",
-        "react-dom": "ReactDOM"
     },
     plugins: [
         new HtmlWebPackPlugin({
         template: "./public/index.html",
         filename: "index.html"
-        })
+        }),
+        new webpack.ProvidePlugin({
+            "React": "react",
+            "react-dom": "ReactDOM"
+         }),
     ]
 };
