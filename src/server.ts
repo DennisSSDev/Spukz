@@ -1,6 +1,7 @@
 import express from 'express';
 import session from 'express-session';
 import uuid from 'uuid/v4';
+import path from 'path';
 import GenContent from './global/content';
 import GetFeed from './feed/handle';
 import PostResource from './form/handle';
@@ -12,7 +13,7 @@ const app = express();
 const directory = __dirname;
 
 // Data by default should always be JSON. If you're still using XML /shrug
-app.use(express.static(`${directory}/../client/build`));
+app.use(express.static(path.resolve(`${directory}/../client/build`)));
 app.use(express.json());
 
 app.use(
@@ -54,7 +55,7 @@ app.post('/postRating', (req, res) => {
 
 // any ask should serve React, unless specified
 app.get('*', (req, res) => {
-  res.sendFile(`${directory}/../client/build/index.html`);
+  res.sendFile(path.resolve(`${directory}/../client/build/index.html`));
 });
 
 // create initial data and servable icons
