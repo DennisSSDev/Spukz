@@ -9,14 +9,15 @@ import GetCompanies, { PostCompanyRating } from './company/handle';
 
 const app = express();
 
+const directory = __dirname;
+
 // Data by default should always be JSON. If you're still using XML /shrug
-app.use(express.static(`${__dirname}/../client/build`));
+app.use(express.static(`${directory}/../client/build`));
 app.use(express.json());
 
 app.use(
   session({
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    genid: req => {
+    genid: () => {
       const id = uuid();
       AddNewUser(id);
       return id;
@@ -53,7 +54,7 @@ app.post('/postRating', (req, res) => {
 
 // any ask should serve React, unless specified
 app.get('*', (req, res) => {
-  res.sendFile(`${__dirname}/../client/build/index.html`);
+  res.sendFile(`${directory}/../client/build/index.html`);
 });
 
 // create initial data and servable icons
