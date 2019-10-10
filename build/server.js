@@ -22,7 +22,7 @@ var handle_3 = __importStar(require("./company/handle"));
 var app = express_1.default();
 var directory = __dirname;
 // Data by default should always be JSON. If you're still using XML /shrug
-app.use(express_1.default.static(path_1.default.join(directory, 'client/build')));
+app.use(express_1.default.static(path_1.default.resolve(directory + "/../client/build")));
 app.use(express_1.default.json());
 app.use(express_session_1.default({
     genid: function () {
@@ -54,7 +54,7 @@ app.post('/postRating', function (req, res) {
 });
 // any ask should serve React, unless specified
 app.get('*', function (req, res) {
-    res.sendFile(path_1.default.join(directory + "/client/build/index.html"));
+    res.sendFile('index.html', { root: './client/build' });
 });
 // create initial data and servable icons
 content_1.default();
