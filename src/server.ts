@@ -55,7 +55,7 @@ app.post('/postRating', (req, res) => {
 
 // any ask should serve React, unless specified
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(`${directory}/../client/build/index.html`));
+  res.sendFile('index.html', { root: './client/build' });
 });
 
 // create initial data and servable icons
