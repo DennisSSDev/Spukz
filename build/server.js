@@ -13,18 +13,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var express_session_1 = __importDefault(require("express-session"));
 var v4_1 = __importDefault(require("uuid/v4"));
+var path_1 = __importDefault(require("path"));
 var content_1 = __importDefault(require("./global/content"));
 var handle_1 = __importDefault(require("./feed/handle"));
 var handle_2 = __importDefault(require("./form/handle"));
 var dataStore_1 = require("./global/dataStore");
 var handle_3 = __importStar(require("./company/handle"));
 var app = express_1.default();
+var directory = __dirname;
 // Data by default should always be JSON. If you're still using XML /shrug
-app.use(express_1.default.static(__dirname + "/../client/build"));
+app.use(express_1.default.static(path_1.default.join(directory, 'client/build')));
 app.use(express_1.default.json());
 app.use(express_session_1.default({
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    genid: function (req) {
+    genid: function () {
         var id = v4_1.default();
         dataStore_1.AddNewUser(id);
         return id;
@@ -53,7 +54,7 @@ app.post('/postRating', function (req, res) {
 });
 // any ask should serve React, unless specified
 app.get('*', function (req, res) {
-    res.sendFile(__dirname + "/../client/build/index.html");
+    res.sendFile(path_1.default.join(directory + "/client/build/index.html"));
 });
 // create initial data and servable icons
 content_1.default();
