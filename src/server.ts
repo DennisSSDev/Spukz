@@ -10,10 +10,8 @@ import GetCompanies, { PostCompanyRating } from './company/handle';
 
 const app = express();
 
-const directory = __dirname;
-
 // Data by default should always be JSON. If you're still using XML /shrug
-app.use(express.static(path.resolve(`${directory}/../client/build`)));
+app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(express.json());
 
 app.use(
@@ -55,7 +53,7 @@ app.post('/postRating', (req, res) => {
 
 // any ask should serve React, unless specified
 app.get('*', (req, res) => {
-  res.sendFile('index.html', { root: './client/build' });
+  res.sendFile(path.join(`${__dirname}/client/build/index.html`));
 });
 
 // create initial data and servable icons
