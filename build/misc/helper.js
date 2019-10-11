@@ -22,4 +22,20 @@ var handleAccept = function (accept, res) {
     }
     return false;
 };
+/**
+ * A helper function to filter resuls from a JSON object
+ * @param obj the object to filter data on
+ * @param predicate the filter function. If true -> item added, otherwise ignore
+ */
+exports.filterObject = function (obj, predicate) {
+    var output = {};
+    var count = 0;
+    Object.keys(obj).forEach(function (value) {
+        if (predicate(obj[value])) {
+            output[count] = obj[value];
+            count++;
+        }
+    });
+    return output;
+};
 exports.default = handleAccept;

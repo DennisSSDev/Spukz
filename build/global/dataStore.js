@@ -13,7 +13,29 @@ var GLOBAL = {
         YouTube: '',
         GDCVault: ''
     },
-    userDB: {}
+    userDB: {},
+    githubStore: { total_count: 0, items: [] },
+    gdcTalkStore: {}
+};
+exports.produceStore = function (json, oldestDate) {
+    var repos = json.items;
+    var items = repos.filter(function (val) {
+        var date = new Date(val.pushed_at);
+        return !val.fork && date >= oldestDate && val.score > 25;
+    });
+    var store = { total_count: json.total_count, items: items };
+    return store;
+};
+exports.SetGitHubStore = function (store, append) {
+    if (append === void 0) { append = false; }
+    if (append) {
+        GLOBAL.githubStore.items.concat(store.items);
+        return;
+    }
+    GLOBAL.githubStore = store;
+};
+exports.SetGDCTalkStore = function (store) {
+    GLOBAL.gdcTalkStore = store;
 };
 /**
  * Helper function responsible for adding new resources into the storage.
@@ -144,5 +166,17 @@ exports.QueryCompanies = function (page) {
         end = length;
     }
     return { companies: companies.slice(start, end) };
+};
+/**
+ * @todo when scale - convert into retrieving items based on sections
+ */
+exports.QueryGDCTalks = function () {
+    return GLOBAL.gdcTalkStore;
+};
+/**
+ * @todo when scale - convert into retrieving items based on sections
+ */
+exports.QueryGitHubRepos = function () {
+    return GLOBAL.githubStore.items.slice(0, 10);
 };
 exports.default = GLOBAL;
