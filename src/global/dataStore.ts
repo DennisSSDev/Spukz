@@ -1,4 +1,12 @@
-import { Global, Resource, Tag, Company } from './dataTypes';
+import {
+  Global,
+  Resource,
+  Tag,
+  Company,
+  GithubRepos,
+  GDCTalks,
+  Repo
+} from './dataTypes';
 
 /**
  * Global Accessor to server inner data.
@@ -13,7 +21,31 @@ const GLOBAL: Global = {
     YouTube: '',
     GDCVault: ''
   },
-  userDB: {}
+  userDB: {},
+  githubStore: { total_count: 0, items: [] },
+  gdcTalkStore: {}
+};
+
+export const produceStore = (json: GithubRepos, oldestDate: Date) => {
+  const repos = json.items as Repo[];
+  const items = repos.filter(val => {
+    const date = new Date(val.pushed_at);
+    return !val.fork && date >= oldestDate && val.score > 25;
+  });
+  const store: GithubRepos = { total_count: json.total_count, items };
+  return store;
+};
+
+export const SetGitHubStore = (store: GithubRepos, append: boolean = false) => {
+  if (append) {
+    GLOBAL.githubStore.items.concat(store.items);
+    return;
+  }
+  GLOBAL.githubStore = store;
+};
+
+export const SetGDCTalkStore = (store: GDCTalks) => {
+  GLOBAL.gdcTalkStore = store;
 };
 
 /**
@@ -169,6 +201,20 @@ export const QueryCompanies = (page: number): { companies: Company[] } => {
     end = length;
   }
   return { companies: companies.slice(start, end) };
+};
+
+/**
+ * @todo when scale - convert into retrieving items based on sections
+ */
+export const QueryGDCTalks = () => {
+  return GLOBAL.gdcTalkStore;
+};
+
+/**
+ * @todo when scale - convert into retrieving items based on sections
+ */
+export const QueryGitHubRepos = () => {
+  return GLOBAL.githubStore.items.slice(0, 10);
 };
 
 export default GLOBAL;

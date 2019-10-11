@@ -23,4 +23,21 @@ const handleAccept = (accept: string | undefined, res: Response) => {
   return false;
 };
 
+/**
+ * A helper function to filter resuls from a JSON object
+ * @param obj the object to filter data on
+ * @param predicate the filter function. If true -> item added, otherwise ignore
+ */
+export const filterObject = (obj: any, predicate: (item: any) => boolean) => {
+  const output: Record<number, {}> = {};
+  let count = 0;
+  Object.keys(obj).forEach(value => {
+    if (predicate(obj[value])) {
+      output[count] = obj[value];
+      count++;
+    }
+  });
+  return output;
+};
+
 export default handleAccept;

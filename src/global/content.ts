@@ -6,6 +6,7 @@ const gen64Asset = (filename: string) => {
   const binary = fs.readFileSync(`${__dirname}/../../meta/${filename}`);
   return Buffer.from(binary).toString('base64');
 };
+
 /**
  * function that pre allocates content that exists on the server.
  * It includes curated data and hashtable look up info like icons
