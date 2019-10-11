@@ -12,6 +12,9 @@ export interface State {
   tags: Record<string, boolean>;
 }
 
+const description =
+  "Here you can look through the latest resource contributions by the community members. And if you're looking for something more specific you can use the tags to filter added resources!";
+
 const useStyles = makeStyles(() =>
   createStyles({
     divider: {
@@ -59,7 +62,7 @@ const VisualComponent: React.FunctionComponent = () => {
       <ScrollTop />
       <div className="content">
         <div id="top-anchor">
-          <Title title="Feed" />
+          <Title title="Feed" description={description} />
         </div>
         <Tags onChipSelect={storeChip} />
         <InfScroll tags={values.tags} />

@@ -1,9 +1,20 @@
 import React from 'react';
-import { Typography, Box, createStyles } from '@material-ui/core';
+import {
+  Typography,
+  Box,
+  createStyles,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText
+} from '@material-ui/core';
 import { withStyles, makeStyles } from '@material-ui/styles';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
 export interface PublicProps {
   title: string;
+  description: string;
 }
 
 type Props = PublicProps;
@@ -27,12 +38,25 @@ const useStyles = makeStyles(() =>
       width: 350,
       borderWidth: 3,
       borderRadius: 30
+    },
+    form: {
+      backgroundColor: '#6F7688'
     }
   })
 );
 
 const VisualComponent: React.FunctionComponent<Props> = (props: Props) => {
-  const { title } = props;
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const { title, description } = props;
   const classes = useStyles();
   return (
     <Box
@@ -43,6 +67,31 @@ const VisualComponent: React.FunctionComponent<Props> = (props: Props) => {
     >
       <hr className={classes.divider} />
       <WhiteText variant="h4">{title}</WhiteText>
+      <div>
+        <Box marginTop={1}>
+          <IconButton onClick={handleClickOpen} size="small" color="secondary">
+            <HelpOutlineIcon color="secondary" />
+          </IconButton>
+        </Box>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          PaperProps={{
+            classes: {
+              root: classes.form
+            }
+          }}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">
+            {`What is ${title}?`}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>{description}</DialogContentText>
+            <br />
+          </DialogContent>
+        </Dialog>
+      </div>
     </Box>
   );
 };
