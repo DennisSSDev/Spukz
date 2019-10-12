@@ -2,6 +2,9 @@ import { Response, Request } from 'express';
 import { Resource, Type } from '../global/dataTypes';
 import GLOBAL, { AddNewResource } from '../global/dataStore';
 
+/**
+ * Post handler for users trying to post a resource
+ */
 const PostResource = (req: Request, res: Response) => {
   const { body } = req;
   const { type, link, title, description, tags } = body;

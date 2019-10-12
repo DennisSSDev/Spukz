@@ -3,6 +3,9 @@ import GLOBAL, { QueryCompanies } from '../global/dataStore';
 import handleAccept from '../misc/helper';
 import { Company } from '../global/dataTypes';
 
+/**
+ * Get the game companies that offer competitve internships
+ */
 const GetCompanies = (req: Request, res: Response) => {
   const { accept } = req.headers;
 

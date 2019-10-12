@@ -61,6 +61,7 @@ export interface Store {
   companies: Company[];
 }
 
+// a single reposity coming from github
 export interface Repo {
   name: string;
   html_url: string;
@@ -87,6 +88,7 @@ export interface Global {
   gdcTalkStore: GDCTalks;
 }
 
+// data to represent the concept of a video on GDC Vault
 export interface GDCTalk {
   title: string;
   track: string;

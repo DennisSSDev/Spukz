@@ -27,6 +27,13 @@ const GLOBAL: Global = {
   gdcTalkStore: {}
 };
 
+/**
+ * Create the github store and filter the data to grab only the relevent
+ * repos that have been made within the past years with some extra
+ * requirements
+ * @param json the data from Github
+ * @param oldestDate the date that will specify the oldest the last repo commit could be
+ */
 export const produceStore = (json: GithubRepos, oldestDate: Date) => {
   const repos = json.items as Repo[];
   const items = repos.filter(val => {

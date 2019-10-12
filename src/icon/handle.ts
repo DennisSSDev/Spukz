@@ -3,6 +3,9 @@ import handleAccept from '../misc/helper';
 import { Type } from '../global/dataTypes';
 import { QueryIcon } from '../global/dataStore';
 
+/**
+ * Retrieve the base64 icon based on the specified icon type
+ */
 const GetIcon = (req: Request, res: Response) => {
   const { accept } = req.headers;
 

@@ -12,6 +12,9 @@ const ProcessTags = (query: any, tags: Tag[]) => {
   if (query.unity && query.unity === 'true') tags.push(Tag.Unity);
 };
 
+/**
+ * Retrieve the latest feed data
+ */
 const GetFeed = (req: Request, res: Response) => {
   const { query } = req;
   const { accept } = req.headers;
