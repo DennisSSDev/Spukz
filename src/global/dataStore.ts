@@ -5,7 +5,8 @@ import {
   Company,
   GithubRepos,
   GDCTalks,
-  Repo
+  Repo,
+  Type
 } from './dataTypes';
 
 /**
@@ -215,6 +216,14 @@ export const QueryGDCTalks = () => {
  */
 export const QueryGitHubRepos = () => {
   return GLOBAL.githubStore.items.slice(0, 10);
+};
+
+/**
+ * A simple query function to get the icon for the specified type
+ * @param type the icon to request for
+ */
+export const QueryIcon = (type: Type) => {
+  return { icon: GLOBAL.iconMap[type] };
 };
 
 export default GLOBAL;

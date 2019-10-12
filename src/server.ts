@@ -17,9 +17,11 @@ import { GithubRepos, GDCTalk } from './global/dataTypes';
 import { filterObject } from './misc/helper';
 import GetGitHubRepos from './github/handle';
 import GetGDCTalks from './gdctalks/handle';
+import GetIcon from './icon/handle';
 
 const app = express();
 const directory = __dirname;
+
 /**
  * Date from which to filter github repos from.
  * Anything older than this will not be considered
@@ -50,6 +52,9 @@ app.use(
  * GETs and HEADs
  */
 
+/**
+ * Retrieve the feed of the latest community contributions
+ */
 app.get('/getFeed', (req, res) => {
   GetFeed(req, res);
 });
@@ -58,6 +63,9 @@ app.head('/getFeed', (req, res) => {
   res.writeHead(200, undefined, { 'Content-Type': 'application/json' }).send();
 });
 
+/**
+ * Get companies that offer high profile internships
+ */
 app.get('/getCompanies', (req, res) => {
   GetCompanies(req, res);
 });
@@ -66,6 +74,9 @@ app.head('/getCompanies', (req, res) => {
   res.writeHead(200, undefined, { 'Content-Type': 'application/json' }).send();
 });
 
+/**
+ * Retrieve uncurated github repos for Unity and Unreal
+ */
 app.get('/github', (req, res) => {
   GetGitHubRepos(req, res);
 });
@@ -74,11 +85,26 @@ app.head('/github', (req, res) => {
   res.writeHead(200, undefined, { 'Content-Type': 'application/json' }).send();
 });
 
+/**
+ * Retrieve uncurated gdc vault data
+ */
 app.get('/gdctalks', (req, res) => {
   GetGDCTalks(req, res);
 });
 
 app.head('/gdctalks', (req, res) => {
+  res.writeHead(200, undefined, { 'Content-Type': 'application/json' }).send();
+});
+
+/**
+ * Retrieve a specific icon if neccessary
+ * options: YouTube, GitHub, GDCVault
+ */
+app.get('/icon', (req, res) => {
+  GetIcon(req, res);
+});
+
+app.head('/icon', (req, res) => {
   res.writeHead(200, undefined, { 'Content-Type': 'application/json' }).send();
 });
 

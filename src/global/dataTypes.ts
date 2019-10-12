@@ -92,6 +92,7 @@ export interface GDCTalk {
   track: string;
   description: string;
   speakers: string;
+  id: string;
 }
 
 export type GDCTalks = Record<number, GDCTalk>;
