@@ -179,4 +179,11 @@ exports.QueryGDCTalks = function () {
 exports.QueryGitHubRepos = function () {
     return GLOBAL.githubStore.items.slice(0, 10);
 };
+/**
+ * A simple query function to get the icon for the specified type
+ * @param type the icon to request for
+ */
+exports.QueryIcon = function (type) {
+    return { icon: GLOBAL.iconMap[type] };
+};
 exports.default = GLOBAL;

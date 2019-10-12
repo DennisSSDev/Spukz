@@ -23,6 +23,7 @@ var handle_3 = __importStar(require("./company/handle"));
 var helper_1 = require("./misc/helper");
 var handle_4 = __importDefault(require("./github/handle"));
 var handle_5 = __importDefault(require("./gdctalks/handle"));
+var handle_6 = __importDefault(require("./icon/handle"));
 var app = express_1.default();
 var directory = __dirname;
 /**
@@ -49,28 +50,50 @@ app.use(express_session_1.default({
 /**
  * GETs and HEADs
  */
+/**
+ * Retrieve the feed of the latest community contributions
+ */
 app.get('/getFeed', function (req, res) {
     handle_1.default(req, res);
 });
 app.head('/getFeed', function (req, res) {
     res.writeHead(200, undefined, { 'Content-Type': 'application/json' }).send();
 });
+/**
+ * Get companies that offer high profile internships
+ */
 app.get('/getCompanies', function (req, res) {
     handle_3.default(req, res);
 });
 app.head('/getCompanies', function (req, res) {
     res.writeHead(200, undefined, { 'Content-Type': 'application/json' }).send();
 });
+/**
+ * Retrieve uncurated github repos for Unity and Unreal
+ */
 app.get('/github', function (req, res) {
     handle_4.default(req, res);
 });
 app.head('/github', function (req, res) {
     res.writeHead(200, undefined, { 'Content-Type': 'application/json' }).send();
 });
+/**
+ * Retrieve uncurated gdc vault data
+ */
 app.get('/gdctalks', function (req, res) {
     handle_5.default(req, res);
 });
 app.head('/gdctalks', function (req, res) {
+    res.writeHead(200, undefined, { 'Content-Type': 'application/json' }).send();
+});
+/**
+ * Retrieve a specific icon if neccessary
+ * options: YouTube, GitHub, GDCVault
+ */
+app.get('/icon', function (req, res) {
+    handle_6.default(req, res);
+});
+app.head('/icon', function (req, res) {
     res.writeHead(200, undefined, { 'Content-Type': 'application/json' }).send();
 });
 /**
