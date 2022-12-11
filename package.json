@@ -21,7 +21,7 @@
     "@types/uuid": "^3.4.5",
     "body-parser": "^1.19.0",
     "eslint-utils": "^1.4.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-session": "^1.16.2",
     "got": "^9.6.0",
     "uuid": "^3.3.3"
